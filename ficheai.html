@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FicheAI — Tes fiches produit en 10 secondes</title>
+<meta name="description" content="FicheAI génère des fiches produit professionnelles en français, arabe et anglais en 10 secondes. Idéal pour les vendeurs e-commerce au Maroc.">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0a0a0a;
+  --s1:#141414;
+  --s2:#1e1e1e;
+  --acc:#d4ff00;
+  --acc2:#ff6b35;
+  --txt:#f0f0f0;
+  --mut:#888;
+  --brd:#2a2a2a;
+  --r:12px;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;overflow-x:hidden;}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2rem;border-bottom:0.5px solid var(--brd);position:sticky;top:0;background:rgba(10,10,10,0.92);backdrop-filter:blur(12px);z-index:100;}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;letter-spacing:-0.5px;color:var(--txt);text-decoration:none;}
+.logo span{color:var(--acc);}
+.nav-links{display:flex;align-items:center;gap:2rem;}
+.nav-links a{color:var(--mut);text-decoration:none;font-size:14px;transition:color .15s;}
+.nav-links a:hover{color:var(--txt);}
+.nav-cta{background:var(--acc);color:#000;border:none;padding:9px 20px;border-radius:30px;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:all .15s;text-decoration:none;}
+.nav-cta:hover{background:#c8f000;transform:translateY(-1px);}
+
+/* HERO */
+.hero{padding:5rem 2rem 3.5rem;text-align:center;max-width:700px;margin:0 auto;}
+.eyebrow{display:inline-block;background:var(--s2);border:0.5px solid var(--brd);border-radius:30px;padding:5px 16px;font-size:12px;color:var(--mut);letter-spacing:2px;font-family:'Syne',sans-serif;margin-bottom:1.75rem;}
+.hero h1{font-family:'Syne',sans-serif;font-size:52px;font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:1.25rem;}
+.hero h1 em{font-style:normal;color:var(--acc);}
+.hero p{font-size:17px;color:var(--mut);max-width:480px;margin:0 auto 2.5rem;font-weight:300;}
+.hero-cta{display:inline-block;background:var(--acc);color:#000;border:none;padding:18px 42px;border-radius:var(--r);font-family:'Syne',sans-serif;font-weight:700;font-size:17px;cursor:pointer;transition:all .2s;letter-spacing:0.3px;text-decoration:none;}
+.hero-cta:hover{background:#c8f000;transform:translateY(-2px);}
+.hero-sub{margin-top:14px;font-size:13px;color:var(--mut);}
+
+/* STATS */
+.stats{display:flex;justify-content:center;gap:3rem;padding:2.5rem 2rem;border-top:0.5px solid var(--brd);border-bottom:0.5px solid var(--brd);}
+.stat-num{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--acc);line-height:1;}
+.stat-lbl{font-size:13px;color:var(--mut);margin-top:4px;}
+
+/* DEMO */
+.demo-section{padding:4rem 2rem;max-width:800px;margin:0 auto;}
+.section-tag{font-family:'Syne',sans-serif;font-size:11px;letter-spacing:2px;color:var(--mut);margin-bottom:1rem;text-transform:uppercase;}
+.demo-section h2{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:2rem;}
+.browser{background:var(--s1);border:0.5px solid var(--brd);border-radius:var(--r);overflow:hidden;}
+.browser-bar{display:flex;align-items:center;gap:6px;padding:12px 16px;border-bottom:0.5px solid var(--brd);background:var(--s2);}
+.dot{width:10px;height:10px;border-radius:50%;}
+.url{flex:1;background:var(--bg);border-radius:6px;padding:5px 12px;font-size:12px;color:var(--mut);font-family:monospace;}
+
+/* TOOL */
+.tool-wrap{padding:2rem;}
+.tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+@media(max-width:600px){.tool-grid{grid-template-columns:1fr;}}
+.field-group{margin-bottom:1.25rem;}
+.field-label{font-size:11px;letter-spacing:2px;color:var(--mut);font-family:'Syne',sans-serif;margin-bottom:8px;display:block;text-transform:uppercase;}
+.field-input,.field-select,.field-textarea{width:100%;background:var(--s2);border:0.5px solid var(--brd);border-radius:8px;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:14px;padding:11px 14px;outline:none;transition:border-color .2s;}
+.field-textarea{min-height:90px;resize:vertical;line-height:1.6;}
+.field-input:focus,.field-select:focus,.field-textarea:focus{border-color:var(--acc);}
+.field-select option{background:#1e1e1e;}
+.lang-pills{display:flex;gap:8px;flex-wrap:wrap;}
+.lang-pill{padding:7px 16px;border-radius:30px;border:0.5px solid var(--brd);background:var(--s2);color:var(--mut);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;user-select:none;}
+.lang-pill.on{background:var(--acc);color:#000;border-color:var(--acc);font-weight:500;}
+.tone-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.tone-btn{padding:10px 6px;border-radius:8px;border:0.5px solid var(--brd);background:var(--s2);color:var(--mut);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:center;transition:all .15s;}
+.tone-btn.on{border-color:var(--acc2);color:var(--acc2);background:rgba(255,107,53,.08);}
+.gen-btn{width:100%;padding:16px;background:var(--acc);color:#000;border:none;border-radius:var(--r);font-family:'Syne',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:1rem;letter-spacing:.3px;}
+.gen-btn:hover{background:#c8f000;transform:translateY(-1px);}
+.gen-btn:disabled{background:#2a2a2a;color:#555;cursor:not-allowed;transform:none;}
+.result{background:var(--bg);border:0.5px solid var(--brd);border-radius:var(--r);padding:1.5rem;margin-top:1.5rem;display:none;}
+.result.show{display:block;}
+.res-tabs{display:flex;gap:4px;margin-bottom:1.25rem;border-bottom:0.5px solid var(--brd);}
+.res-tab{padding:8px 16px;font-size:13px;cursor:pointer;border:none;background:none;color:var(--mut);font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;}
+.res-tab.on{color:var(--acc);border-bottom-color:var(--acc);}
+.res-body{font-size:14px;line-height:1.9;color:var(--txt);white-space:pre-wrap;min-height:80px;}
+.copy-btn{margin-top:1rem;padding:9px 18px;border-radius:8px;border:0.5px solid var(--brd);background:var(--s2);color:var(--txt);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.copy-btn:hover{border-color:var(--acc);color:var(--acc);}
+.err{color:#ff6b6b;font-size:13px;margin-top:8px;display:none;}
+
+/* FEATURES */
+.features-section{padding:5rem 2rem;max-width:800px;margin:0 auto;}
+.features-section h2{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:2rem;}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;}
+.feat{background:var(--s1);border:0.5px solid var(--brd);border-radius:var(--r);padding:1.5rem;}
+.feat-icon{font-size:24px;margin-bottom:.75rem;}
+.feat h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px;}
+.feat p{font-size:13px;color:var(--mut);line-height:1.6;}
+
+/* TESTIMONIALS */
+.testi-section{padding:5rem 2rem;border-top:0.5px solid var(--brd);max-width:800px;margin:0 auto;}
+.testi-section h2{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:2rem;}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;}
+.testi{background:var(--s1);border:0.5px solid var(--brd);border-radius:var(--r);padding:1.5rem;}
+.stars{color:var(--acc);font-size:13px;margin-bottom:10px;letter-spacing:3px;}
+.testi-text{font-size:14px;color:var(--txt);font-style:italic;margin-bottom:1rem;line-height:1.7;}
+.testi-author{display:flex;align-items:center;gap:10px;}
+.avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'Syne',sans-serif;}
+.testi-name{font-size:13px;font-weight:500;}
+.testi-role{font-size:11px;color:var(--mut);}
+
+/* PRICING */
+.pricing-section{padding:5rem 2rem;max-width:800px;margin:0 auto;}
+.pricing-section h2{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:.5rem;}
+.pricing-section>p{color:var(--mut);font-size:15px;margin-bottom:2rem;}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;}
+.plan{background:var(--s1);border:0.5px solid var(--brd);border-radius:var(--r);padding:1.75rem;}
+.plan.hot{border:1.5px solid var(--acc);}
+.plan-badge{display:inline-block;background:var(--acc);color:#000;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;font-family:'Syne',sans-serif;letter-spacing:1px;margin-bottom:.75rem;}
+.plan-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:.25rem;}
+.plan-price{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:var(--acc);line-height:1;}
+.plan-price sup{font-size:18px;vertical-align:top;margin-top:6px;}
+.plan-price sub{font-size:14px;color:var(--mut);font-weight:400;}
+.plan-desc{font-size:13px;color:var(--mut);margin:8px 0 1.25rem;}
+.plan-feats{list-style:none;margin-bottom:1.5rem;}
+.plan-feats li{font-size:13px;padding:6px 0;border-bottom:0.5px solid var(--brd);display:flex;align-items:center;gap:8px;}
+.plan-feats li:last-child{border:none;}
+.chk{color:var(--acc);}
+.plan-btn{width:100%;padding:13px;border-radius:8px;border:0.5px solid var(--brd);background:var(--s2);color:var(--txt);font-family:'Syne',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;}
+.plan-btn.prime{background:var(--acc);color:#000;border-color:var(--acc);}
+.plan-btn:hover{opacity:.85;}
+
+/* FAQ */
+.faq-section{padding:5rem 2rem;border-top:0.5px solid var(--brd);max-width:800px;margin:0 auto;}
+.faq-section h2{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:2rem;}
+.faq-list{display:flex;flex-direction:column;gap:8px;}
+.faq-item{background:var(--s1);border:0.5px solid var(--brd);border-radius:var(--r);overflow:hidden;}
+.faq-q{width:100%;background:none;border:none;color:var(--txt);font-family:'Syne',sans-serif;font-size:14px;font-weight:600;padding:1.25rem;text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between;}
+.faq-q .arrow{color:var(--mut);transition:transform .2s;font-size:18px;}
+.faq-q.open .arrow{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.faq-a.open{max-height:200px;}
+.faq-a p{padding:0 1.25rem 1.25rem;font-size:13px;color:var(--mut);line-height:1.7;}
+
+/* FINAL CTA */
+.final-cta{margin:2rem;background:var(--s1);border:0.5px solid var(--brd);border-radius:16px;padding:4rem 2rem;text-align:center;}
+.final-cta h2{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;letter-spacing:-1px;margin-bottom:.75rem;}
+.final-cta p{color:var(--mut);font-size:15px;margin-bottom:2rem;}
+.final-cta .hero-cta{font-size:16px;}
+
+/* FOOTER */
+footer{border-top:0.5px solid var(--brd);padding:2rem;text-align:center;color:var(--mut);font-size:13px;}
+footer span{color:var(--acc);}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.hero{animation:fadeUp .6s ease both;}
+.stats{animation:fadeUp .6s .1s ease both;}
+
+@media(max-width:600px){
+  .hero h1{font-size:36px;}
+  .stats{flex-wrap:wrap;gap:1.5rem;}
+  nav .nav-links{display:none;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">fiche<span>AI</span></a>
+  <div class="nav-links">
+    <a href="#outil">L'outil</a>
+    <a href="#tarifs">Tarifs</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a href="#outil" class="nav-cta">Essayer gratis</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow">✦ IA POUR E-COMMERCE MAROC</div>
+  <h1>Ta fiche produit<br>en <em>10 secondes.</em><br>En 3 langues.</h1>
+  <p>Stop à la page blanche. FicheAI génère des descriptions qui vendent — en français, arabe et anglais — pour ton shop en ligne.</p>
+  <a href="#outil" class="hero-cta">Générer ma première fiche →</a>
+  <p class="hero-sub">✓ Gratuit pour commencer &nbsp;·&nbsp; ✓ Sans carte bancaire &nbsp;·&nbsp; ✓ Prêt en 10s</p>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div>
+    <div class="stat-num">3</div>
+    <div class="stat-lbl">Langues</div>
+  </div>
+  <div>
+    <div class="stat-num">&lt;10s</div>
+    <div class="stat-lbl">Par fiche</div>
+  </div>
+  <div>
+    <div class="stat-num">6</div>
+    <div class="stat-lbl">Tons disponibles</div>
+  </div>
+  <div>
+    <div class="stat-num">100%</div>
+    <div class="stat-lbl">Unique</div>
+  </div>
+</div>
+
+<!-- OUTIL -->
+<section class="demo-section" id="outil">
+  <div class="section-tag">L'outil</div>
+  <h2>Génère ta fiche maintenant.</h2>
+  <div class="browser">
+    <div class="browser-bar">
+      <div class="dot" style="background:#ff5f57;"></div>
+      <div class="dot" style="background:#febc2e;"></div>
+      <div class="dot" style="background:#28c840;"></div>
+      <div class="url">ficheai.ma</div>
+    </div>
+    <div class="tool-wrap">
+      <div class="tool-grid">
+        <div>
+          <div class="field-group">
+            <label class="field-label">Nom du produit *</label>
+            <input class="field-input" id="pname" placeholder="ex: Caftan brodé main, Huile d'argan 100ml...">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Catégorie</label>
+            <select class="field-select" id="pcat">
+              <option value="mode">Mode & Vêtements</option>
+              <option value="beaute">Beauté & Cosmétiques</option>
+              <option value="artisanat">Artisanat & Déco</option>
+              <option value="alimentaire">Alimentaire</option>
+              <option value="electronique">Électronique</option>
+              <option value="maison">Maison & Jardin</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Langues</label>
+            <div class="lang-pills">
+              <div class="lang-pill on" data-lang="fr">🇫🇷 Français</div>
+              <div class="lang-pill" data-lang="ar">🇲🇦 Arabe</div>
+              <div class="lang-pill" data-lang="en">🇬🇧 English</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="field-group">
+            <label class="field-label">Caractéristiques</label>
+            <textarea class="field-textarea" id="pdetails" placeholder="ex: Fait main, coton bio, taille unique, couleurs: rouge, bleu, blanc..."></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Ton</label>
+            <div class="tone-grid">
+              <button class="tone-btn on" data-tone="professionnel">💼 Pro</button>
+              <button class="tone-btn" data-tone="luxe">✨ Luxe</button>
+              <button class="tone-btn" data-tone="dynamique">⚡ Dynamique</button>
+              <button class="tone-btn" data-tone="authentique">🌿 Authentique</button>
+              <button class="tone-btn" data-tone="minimaliste">◻ Minimaliste</button>
+              <button class="tone-btn" data-tone="storytelling">📖 Storytelling</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="gen-btn" id="genbtn" onclick="generate()">✦ Générer ma fiche produit</button>
+      <div class="err" id="err">Remplis le nom du produit pour continuer.</div>
+
+      <div class="result" id="result">
+        <div class="res-tabs" id="tabs"></div>
+        <div class="res-body" id="resbody"></div>
+        <button class="copy-btn" onclick="copyRes()">📋 Copier le texte</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div class="section-tag">Pourquoi ficheai</div>
+  <h2>Tout ce dont tu as besoin pour vendre plus.</h2>
+  <div class="feat-grid">
+    <div class="feat">
+      <div class="feat-icon">⚡</div>
+      <h3>Ultra rapide</h3>
+      <p>10 secondes par fiche. 100 fiches = 15 minutes au lieu de 3 jours entiers.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">🌍</div>
+      <h3>3 langues</h3>
+      <p>Français, arabe et anglais. Touche plus de clients, vends plus loin.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">🎯</div>
+      <h3>Copywriting pro</h3>
+      <p>Émotions, bénéfices, appels à l'action. Pas du texte générique et fade.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">🇲🇦</div>
+      <h3>Pensé Maroc</h3>
+      <p>Adapté à la culture locale. Parfait pour Jumia, Instagram, Shopify.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-section">
+  <div class="section-tag">Ils nous font confiance</div>
+  <h2>Des vendeurs qui vendent mieux.</h2>
+  <div class="testi-grid">
+    <div class="testi">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"J'avais 200 produits à mettre en ligne. FicheAI m'a sauvé la vie, j'ai tout fait en une journée."</p>
+      <div class="testi-author">
+        <div class="avatar" style="background:#0e2a1f;color:#5DCAA5;">KA</div>
+        <div>
+          <div class="testi-name">Karim A.</div>
+          <div class="testi-role">Boutique mode, Casablanca</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Le texte en arabe est parfait. Mes clientes du Gulf adorent. Mes ventes ont augmenté de 40%."</p>
+      <div class="testi-author">
+        <div class="avatar" style="background:#1d1030;color:#AFA9EC;">SB</div>
+        <div>
+          <div class="testi-name">Salma B.</div>
+          <div class="testi-role">Cosmétiques naturels, Rabat</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"J'exporte vers l'Europe. Les fiches en anglais sont impeccables et très professionnelles."</p>
+      <div class="testi-author">
+        <div class="avatar" style="background:#1f1005;color:#EF9F27;">YM</div>
+        <div>
+          <div class="testi-name">Youssef M.</div>
+          <div class="testi-role">Artisan, Fès</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="tarifs">
+  <div class="section-tag">Tarifs</div>
+  <h2>Simple et transparent.</h2>
+  <p>Commence gratuitement, passe au Pro quand tu es prêt.</p>
+  <div class="plans">
+    <div class="plan">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price"><sup></sup>0<sub> MAD/mois</sub></div>
+      <div class="plan-desc">Pour tester et démarrer</div>
+      <ul class="plan-feats">
+        <li><span class="chk">✦</span> 3 fiches par mois</li>
+        <li><span class="chk">✦</span> Français uniquement</li>
+        <li><span class="chk">✦</span> 3 tons disponibles</li>
+      </ul>
+      <button class="plan-btn" onclick="document.getElementById('outil').scrollIntoView({behavior:'smooth'})">Commencer gratis</button>
+    </div>
+    <div class="plan hot">
+      <div class="plan-badge">LE PLUS POPULAIRE</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price"><sup></sup>99<sub> MAD/mois</sub></div>
+      <div class="plan-desc">Pour les vendeurs sérieux</div>
+      <ul class="plan-feats">
+        <li><span class="chk">✦</span> Fiches illimitées</li>
+        <li><span class="chk">✦</span> 3 langues incluses</li>
+        <li><span class="chk">✦</span> 6 tons disponibles</li>
+        <li><span class="chk">✦</span> Export PDF & Word</li>
+        <li><span class="chk">✦</span> Support prioritaire</li>
+      </ul>
+      <button class="plan-btn prime">Démarrer en Pro →</button>
+    </div>
+    <div class="plan">
+      <div class="plan-name">Agence</div>
+      <div class="plan-price"><sup></sup>299<sub> MAD/mois</sub></div>
+      <div class="plan-desc">Pour les équipes & agences</div>
+      <ul class="plan-feats">
+        <li><span class="chk">✦</span> Tout le plan Pro</li>
+        <li><span class="chk">✦</span> 5 utilisateurs</li>
+        <li><span class="chk">✦</span> API disponible</li>
+        <li><span class="chk">✦</span> Marque blanche</li>
+        <li><span class="chk">✦</span> Onboarding dédié</li>
+      </ul>
+      <button class="plan-btn">Contacter l'équipe</button>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="section-tag">Questions fréquentes</div>
+  <h2>Tout ce que tu veux savoir.</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Est-ce que l'arabe généré est correct ? <span class="arrow">+</span></button>
+      <div class="faq-a"><p>Oui, on utilise un modèle IA entraîné sur l'arabe standard et dialectal marocain. Le texte est naturel, fluide et parfaitement adapté au commerce en ligne.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Je peux l'utiliser pour Jumia, Etsy ou Shopify ? <span class="arrow">+</span></button>
+      <div class="faq-a"><p>Absolument. FicheAI génère du texte que tu peux coller directement dans n'importe quelle plateforme e-commerce : Jumia, Etsy, Shopify, WooCommerce, Instagram...</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Et si je ne suis pas satisfait ? <span class="arrow">+</span></button>
+      <div class="faq-a"><p>On rembourse sans question dans les 7 jours. Envoie un email et c'est réglé en 24h. Aucun risque, aucune prise de tête.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Comment fonctionne le paiement ? <span class="arrow">+</span></button>
+      <div class="faq-a"><p>On accepte les cartes bancaires marocaines (CIH, Attijariwafa, BMCE...) via CMI, ainsi que PayPal et virement bancaire pour les plans Agence.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Mes données produits sont-elles sécurisées ? <span class="arrow">+</span></button>
+      <div class="faq-a"><p>Oui. On ne stocke jamais tes données produits. Chaque génération est traitée en temps réel et supprimée immédiatement après.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="final-cta">
+  <h2>Prêt à vendre plus vite ?</h2>
+  <p>3 fiches gratuites t'attendent. Aucune carte bancaire requise.</p>
+  <a href="#outil" class="hero-cta">Essayer FicheAI gratuitement →</a>
+</div>
+
+<footer>
+  <p>© 2025 <span>FicheAI</span> · Fait avec ❤️ au Maroc · <a href="mailto:contact@ficheai.ma" style="color:var(--mut);">contact@ficheai.ma</a></p>
+</footer>
+
+<script>
+const selLangs = new Set(['fr']);
+let selTone = 'professionnel';
+let results = {};
+let activeLang = 'fr';
+const langNames = {fr:'🇫🇷 Français', ar:'🇲🇦 Arabe', en:'🇬🇧 English'};
+
+document.querySelectorAll('.lang-pill').forEach(p => {
+  p.addEventListener('click', () => {
+    const l = p.dataset.lang;
+    if(selLangs.has(l)){if(selLangs.size===1)return;selLangs.delete(l);p.classList.remove('on');}
+    else{selLangs.add(l);p.classList.add('on');}
+  });
+});
+
+document.querySelectorAll('.tone-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.tone-btn').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    selTone = b.dataset.tone;
+  });
+});
+
+function buildTabs(){
+  const tabs = document.getElementById('tabs');
+  tabs.innerHTML = '';
+  [...selLangs].forEach(l => {
+    const t = document.createElement('button');
+    t.className = 'res-tab' + (l === activeLang ? ' on' : '');
+    t.dataset.lang = l;
+    t.textContent = langNames[l];
+    t.onclick = () => showLang(l);
+    tabs.appendChild(t);
+  });
+}
+
+function showLang(lang){
+  activeLang = lang;
+  document.querySelectorAll('.res-tab').forEach(t => t.classList.toggle('on', t.dataset.lang === lang));
+  const el = document.getElementById('resbody');
+  el.textContent = results[lang] || '...';
+  el.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
+}
+
+async function generate(){
+  const name = document.getElementById('pname').value.trim();
+  const cat = document.getElementById('pcat').value;
+  const details = document.getElementById('pdetails').value.trim();
+  const errEl = document.getElementById('err');
+  if(!name){errEl.style.display='block';return;}
+  errEl.style.display='none';
+  const btn = document.getElementById('genbtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Génération en cours...';
+  results = {};
+  activeLang = [...selLangs][0];
+  const res = document.getElementById('result');
+  res.classList.add('show');
+  document.getElementById('resbody').textContent = 'Génération en cours...';
+  buildTabs();
+  const li = {fr:'en français',ar:'en arabe (écris uniquement en arabe)',en:'in English'};
+  for(const lang of selLangs){
+    const prompt = `Tu es un expert copywriter e-commerce spécialisé Maroc/Afrique francophone. Génère une fiche produit ${li[lang]}.
+
+Produit: ${name}
+Catégorie: ${cat}
+Détails: ${details || 'non précisé'}
+Ton: ${selTone}
+
+Structure:
+1. Titre accrocheur
+2. Description courte (2-3 phrases vendeuses)
+3. Points forts (3-5 items avec emoji)
+4. Appel à l'action fort
+
+Sois concis, percutant, culturellement adapté. Réponds UNIQUEMENT avec la fiche, sans intro ni explication.`;
+    try{
+      const r = await fetch("https://api.anthropic.com/v1/messages",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:prompt}]})
+      });
+      const d = await r.json();
+      results[lang] = d.content?.[0]?.text || 'Erreur de génération.';
+    }catch(e){results[lang]='Erreur de connexion. Réessaie.';}
+  }
+  buildTabs();
+  showLang(activeLang);
+  btn.disabled = false;
+  btn.textContent = '✦ Régénérer';
+}
+
+function copyRes(){
+  navigator.clipboard.writeText(results[activeLang]||'').then(()=>{
+    const b = document.querySelector('.copy-btn');
+    b.textContent = '✓ Copié !';
+    setTimeout(()=>b.textContent='📋 Copier le texte',2000);
+  });
+}
+
+function toggleFaq(btn){
+  const a = btn.nextElementSibling;
+  const isOpen = a.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(x=>x.classList.remove('open'));
+  document.querySelectorAll('.faq-q').forEach(x=>x.classList.remove('open'));
+  if(!isOpen){a.classList.add('open');btn.classList.add('open');}
+}
+</script>
+</body>
+</html>
