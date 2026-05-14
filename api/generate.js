@@ -1,3 +1,5 @@
+const ipCounts = {};
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -5,6 +7,16 @@ export default async function handler(req, res) {
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+  const MAX_FREE = 3;
+
+  if (!ipCounts[ip]) ipCounts[ip] = { count: 0, resetAt: Date.now() + 24*60*60*1000 };
+  if (Date.now() > ipCounts[ip].resetAt) { ipCounts[ip] = { count: 0, resetAt: Date.now() + 24*60*60*1000 }; }
+
+  if (ipCounts[ip].count >= MAX_FREE) {
+    return res.status(403).json({ error: 'LIMIT_REACHED', message: 'Limite gratuite atteinte' });
+  }
 
   const { prompt } = req.body;
   if (!prompt) return res.status(400).json({ error: 'No prompt provided' });
@@ -26,7 +38,8 @@ export default async function handler(req, res) {
 
     const data = await response.json();
     const text = data.content?.[0]?.text || 'Erreur de génération.';
-    res.status(200).json({ text });
+    ipCounts[ip].count++;
+    res.status(200).json({ text, remaining: MAX_FREE - ipCounts[ip].count });
   } catch (error) {
     res.status(500).json({ error: 'Erreur serveur: ' + error.message });
   }
