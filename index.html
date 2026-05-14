@@ -504,13 +504,13 @@ Structure:
 
 Sois concis, percutant, culturellement adapté. Réponds UNIQUEMENT avec la fiche, sans intro ni explication.`;
     try{
-      const r = await fetch("https://api.anthropic.com/v1/messages",{
+      const r = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyCJH1vmmCqdc-J3joNCxvtX7m3YNIUAYtg",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:prompt}]})
+        body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})
       });
       const d = await r.json();
-      results[lang] = d.content?.[0]?.text || 'Erreur de génération.';
+      results[lang] = d.candidates?.[0]?.content?.parts?.[0]?.text || 'Erreur de génération.';
     }catch(e){results[lang]='Erreur de connexion. Réessaie.';}
   }
   buildTabs();
