@@ -521,8 +521,10 @@ Sois concis, percutant, culturellement adapté. Réponds UNIQUEMENT avec la fich
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({prompt})
       });
+      if(r.status === 403){ showPaywall(); btn.disabled=false; btnText.textContent='✦ Générer ma fiche produit'; return; }
       const d = await r.json();
       results[lang] = d.text || 'Erreur de génération.';
+      if(d.remaining !== undefined){ const el=document.getElementById('counter'); if(el) el.textContent = d.remaining > 0 ? d.remaining+' fiche'+(d.remaining>1?'s':'')+' gratuite'+(d.remaining>1?'s':'')+' restante'+(d.remaining>1?'s':'') : 'Limite atteinte'; }
     }catch(e){results[lang]='Erreur de connexion. Réessaie.';}
   }
   buildTabs();
